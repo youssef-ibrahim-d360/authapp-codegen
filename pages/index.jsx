@@ -51,7 +51,6 @@ function Homepage() {
   if (error) return <div>error   {error.message}</div>;
   if (user) {
 
-    setResult(authCallback(user));
 
     return (
       <div>

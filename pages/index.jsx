@@ -10,19 +10,35 @@ import { ensurePlasmicAppUser } from '@plasmicapp/auth-api';
 
 async function authCallback(user) {
   
-  const result = await ensurePlasmicAppUser({
+  /*const result = await ensurePlasmicAppUser({
     email: user.email,
     appSecret: 'kVeHgXahpOXzUrDOJurWlHjYqSKn8EbYHOC5w6Ff1BU3lMvPtCuuP3my7amMA3qUIZWpjTz2c7XS4vEcSs7Pw'
   });
-  console.log('result', result);
+  */
+  fetch('/api/proxy', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email: user.email, 
+      appSecret: 'kVeHgXahpOXzUrDOJurWlHjYqSKn8EbYHOC5w6Ff1BU3lMvPtCuuP3my7amMA3qUIZWpjTz2c7XS4vEcSs7Pw'
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      console.error(data.error);
+    } else {
+      console.log(JSON.stringify(data));
 
-  // The function won't throw an error, but will return an error message instead
-  if (result.error) {
-    console.error(result.error);
-  }
+     return data;
+    }
+  })
+  .catch(error => console.error('Error:', error));
 
 
-  return result;
+
 
 }
 
@@ -31,19 +47,17 @@ function Homepage() {
   const { user, error, isLoading } = useUser();
   const [myPlasmicUser, setMyPlasmicUser] = React.useState(null);
   const [myPlasmicUserToken, setMyPlasmicUserToken] = React.useState(null);
-
+  const [result, setResult] = React.useState(null);
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>error   {error.message}</div>;
   if (user) {
 
-    const result = authCallback(user);
-    const { plasmicUser: plasmicUser, plasmicUserToken: plasmicUserToken } = result;
-    setMyPlasmicUser(plasmicUser);
-    setMyPlasmicUserToken(plasmicUserToken);
+    setResult(authCallback(user));
+
     return (
 
       <div>
-        Welcome {user.name} plasmicuser {JSON.stringify(myPlasmicUser)} plasmicUserToken {plasmicUserToken}! <a href="/api/auth/logout">Logout</a>
+        Welcome {user.name} result {JSON.stringify(result)}! <a href="/api/auth/logout">Logout</a>
       </div>
     );
   }

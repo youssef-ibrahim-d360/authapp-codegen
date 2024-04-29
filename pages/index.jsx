@@ -54,9 +54,11 @@ function Homepage() {
     setResult(authCallback(user));
 
     return (
-
       <div>
-        Welcome {user.name} result {JSON.stringify(result)}! <a href="/api/auth/logout">Logout</a>
+      <div>
+        Welcome {user.name} {user.picture} ! <a href="/api/auth/logout">Logout</a>
+      </div>
+      <button onClick={(user!=null)?authCallback(user):null}>Auth test</button>
       </div>
     );
   }

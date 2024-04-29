@@ -21,7 +21,7 @@ async function authCallback(user) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      email: user.email, 
+      email: "youssefhood@gmail.com", 
       appSecret: 'kVeHgXahpOXzUrDOJurWlHjYqSKn8EbYHOC5w6Ff1BU3lMvPtCuuP3my7amMA3qUIZWpjTz2c7XS4vEcSs7Pw'
     })
   })
@@ -32,7 +32,6 @@ async function authCallback(user) {
     } else {
       console.log(JSON.stringify(data));
 
-     return data;
     }
   })
   .catch(error => console.error('Error:', error));

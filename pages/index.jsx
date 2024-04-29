@@ -54,10 +54,11 @@ function Homepage() {
 
     return (
       <div>
+        <img src={user.picture} alt={user.name} />
       <div>
-        Welcome {user.name} {user.picture} ! <a href="/api/auth/logout">Logout</a>
+        Welcome {user.name} ! <a href="/api/auth/logout">Logout</a>
       </div>
-      <button onClick={(user!=null)?authCallback(user):null}>Auth test</button>
+      
       </div>
     );
   }

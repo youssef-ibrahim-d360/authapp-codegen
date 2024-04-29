@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^3.5.0",
     "@plasmicapp/cli": "^0.1.327",
     "@plasmicapp/react-web": "^0.2.330",
     "next": "14.2.3",

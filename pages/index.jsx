@@ -4,8 +4,22 @@ import * as React from "react";
 import { PageParamsProvider as PageParamsProvider__ } from "@plasmicapp/react-web/lib/host";
 import { PlasmicHomepage } from "../components/plasmic/auth_0_test/PlasmicHomepage";
 import { useRouter } from "next/router";
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 function Homepage() {
+  const { user, error, isLoading } = useUser();
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>error   {error.message}</div>;
+  if (user) {
+    return (
+      <div>
+        Welcome {user.name}! <a href="/api/auth/logout">Logout</a>
+      </div>
+    );
+  }
+
+  return (<a href="/api/auth/login">Login</a>);
   // Use PlasmicHomepage to render this component as it was
   // designed in Plasmic, by activating the appropriate variants,
   // attaching the appropriate event handlers, etc.  You
@@ -22,7 +36,7 @@ function Homepage() {
   // variant context providers. These wrappers may be moved to
   // Next.js Custom App component
   // (https://nextjs.org/docs/advanced-features/custom-app).
-  return (
+ /* return (
     <PageParamsProvider__
       route={useRouter()?.pathname}
       params={useRouter()?.query}
@@ -30,7 +44,7 @@ function Homepage() {
     >
       <PlasmicHomepage />
     </PageParamsProvider__>
-  );
+  );*/
 }
 
 export default Homepage;
